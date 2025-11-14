@@ -27,4 +27,8 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\IndigoApp.Infrastructure\IndigoApp.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
