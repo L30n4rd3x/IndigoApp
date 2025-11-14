@@ -1,8 +1,8 @@
 namespace IndigoApp.Forms
 {
-    public partial class SignIn : Form
+    public partial class Main : Form
     {
-        public SignIn()
+        public Main()
         {
             InitializeComponent();
         }

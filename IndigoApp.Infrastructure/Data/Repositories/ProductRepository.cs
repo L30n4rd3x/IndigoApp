@@ -1,5 +1,6 @@
 ﻿using IndigoApp.Domain.Entities;
 using IndigoApp.Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,29 +11,37 @@ namespace IndigoApp.Infrastructure.Data.Repositories
 {
     public class ProductRepository : IProductRepository
     {
-        public Task AddProductAsync(Product prod)
+        private readonly IndigoAppDbContext _ctx;
+
+        public ProductRepository(IndigoAppDbContext context)
         {
-            throw new NotImplementedException();
+            _ctx = context;
         }
 
-        public Task DeleteProductAsync(int id)
+        public async Task AddProductAsync(Product prod)
         {
-            throw new NotImplementedException();
+            _ctx.Prods.Add(prod);
+            await _ctx.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<Product>> GetAllProductsAsync()
+        public async Task DeleteProductAsync(int id)
         {
-            throw new NotImplementedException();
+            var product = await _ctx.Prods.FindAsync(id);
+            if (product != null)
+            {
+                _ctx.Prods.Remove(product);
+                await _ctx.SaveChangesAsync();
+            }
         }
 
-        public Task<Product?> GetProductByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<IEnumerable<Product>> GetAllProductsAsync() => await _ctx.Prods.ToListAsync();
 
-        public Task UpdateProductAsync(Product prod)
+        public async Task<Product?> GetProductByIdAsync(int id) => await _ctx.Prods.FindAsync(id);
+
+        public async Task UpdateProductAsync(Product prod)
         {
-            throw new NotImplementedException();
+            _ctx.Prods.Update(prod);
+            await _ctx.SaveChangesAsync();
         }
     }
 }

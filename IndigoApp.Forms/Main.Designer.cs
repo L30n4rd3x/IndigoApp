@@ -1,6 +1,6 @@
 ﻿namespace IndigoApp.Forms
 {
-    partial class SignIn
+    partial class Main
     {
         /// <summary>
         ///  Required designer variable.

@@ -11,6 +11,9 @@ namespace IndigoApp.Infrastructure.Data
     public class IndigoAppDbContext : DbContext
     {
         public DbSet<Product> Prods => Set<Product>();
+        public DbSet<Sale> Sales => Set<Sale>();
+        public DbSet<SaleDetail> SaleDetails => Set<SaleDetail>();
+        public DbSet<User> Users => Set<User>();
 
         public IndigoAppDbContext(DbContextOptions<IndigoAppDbContext> options) : base(options) { }
 
