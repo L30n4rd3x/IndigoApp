@@ -20,27 +20,27 @@ namespace IndigoApp.Infrastructure.Data.Repositories
 
         public async Task AddProductAsync(Product prod)
         {
-            _ctx.Prods.Add(prod);
+            _ctx.Products.Add(prod);
             await _ctx.SaveChangesAsync();
         }
 
         public async Task DeleteProductAsync(int id)
         {
-            var product = await _ctx.Prods.FindAsync(id);
+            var product = await _ctx.Products.FindAsync(id);
             if (product != null)
             {
-                _ctx.Prods.Remove(product);
+                _ctx.Products.Remove(product);
                 await _ctx.SaveChangesAsync();
             }
         }
 
-        public async Task<IEnumerable<Product>> GetAllProductsAsync() => await _ctx.Prods.ToListAsync();
+        public async Task<IEnumerable<Product>> GetAllProductsAsync() => await _ctx.Products.ToListAsync();
 
-        public async Task<Product?> GetProductByIdAsync(int id) => await _ctx.Prods.FindAsync(id);
+        public async Task<Product?> GetProductByIdAsync(int id) => await _ctx.Products.FindAsync(id);
 
         public async Task UpdateProductAsync(Product prod)
         {
-            _ctx.Prods.Update(prod);
+            _ctx.Products.Update(prod);
             await _ctx.SaveChangesAsync();
         }
     }

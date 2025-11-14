@@ -2,6 +2,7 @@
 using IndigoApp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IndigoApp.Infrastructure.Migrations
 {
     [DbContext(typeof(IndigoAppDbContext))]
-    partial class IndigoAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251114184724_FixUserTableName")]
+    partial class FixUserTableName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.1");

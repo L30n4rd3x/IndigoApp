@@ -21,7 +21,7 @@ builder.Services.AddScoped<IAuthService, AuthJWTServices>();
 
 // JWT
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
-var secretKey = jwtSettings["SecretKey"] ?? "asdfghjkl987654321";
+var secretKey = jwtSettings["SecretKey"] ?? "asdfghjkl987ky687t6dfjghdfgdfjhfytytd76677rc65654321";
 
 builder.Services.AddAuthentication(options =>
 {
@@ -59,7 +59,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
