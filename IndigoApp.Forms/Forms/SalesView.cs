@@ -169,6 +169,8 @@ namespace IndigoApp.Forms.Forms
 
         private void btnAtras_Click(object sender, EventArgs e)
         {
+            var MenuView = new MenuView(_authService);
+            MenuView.Show();
             this.Hide();
         }
     }

@@ -52,28 +52,6 @@ namespace IndigoApp.Forms.Forms
             }
         }
 
-        private async void btnFiltrar_Click(object sender, EventArgs e)
-        {
-            var startDate = DateFechaInicial.Value.Date;
-            var endDate = DateFechaFinal.Value.Date.AddDays(1).AddSeconds(-1); // Incluir todo el día final
-
-            if (startDate > endDate)
-            {
-                MessageBox.Show("La fecha inicial no puede ser mayor a la fecha final",
-                    "Error de fechas", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            var sales = await _saleService.GetSalesByDateRangeAsync(startDate, endDate);
-            if (sales != null)
-            {
-                var salesList = sales.ToList();
-                gridHistorico.DataSource = null;
-                gridHistorico.DataSource = salesList;
-                ConfigureGrid();
-            }
-        }
-
         private void btnMostrarTodas_Click(object sender, EventArgs e)
         {
             LoadAllSales();
@@ -92,7 +70,7 @@ namespace IndigoApp.Forms.Forms
                 // Configurar formato de columnas
                 if (gridHistorico.Columns.Contains("Id"))
                 {
-                    gridReportes.Columns["Id"].HeaderText = "ID Venta";
+                    gridHistorico.Columns["Id"].HeaderText = "ID Venta";
                     gridHistorico.Columns["Id"].Width = 80;
                 }
                 if (gridHistorico.Columns.Contains("UserId"))
@@ -115,28 +93,33 @@ namespace IndigoApp.Forms.Forms
             }
         }
 
-        private void gridReportes_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0) return;
-
-            var sale = (Sale)gridHistorico.Rows[e.RowIndex].DataBoundItem;
-            var details = string.Join("\n", sale.SaleDetails.Select(sd =>
-                $"- {sd.Product.Name}: {sd.Quantity} x ${sd.UnitPrice:N2} = ${sd.Subtotal:N2}"));
-
-            MessageBox.Show(
-                $"Venta ID: {sale.Id}\n" +
-                $"Fecha: {sale.SaleDate:dd/MM/yyyy HH:mm}\n" +
-                $"Usuario ID: {sale.UserId}\n\n" +
-                $"Detalles:\n{details}\n\n" +
-                $"Total: ${sale.Total:N2}",
-                "Detalle de Venta",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
-        }
-
         private void btnBack_Click(object sender, EventArgs e)
         {
+            var MenuView = new MenuView(_authService);
+            MenuView.Show();
             this.Hide();
+        }
+
+        private async void btnConsultar_Click(object sender, EventArgs e)
+        {
+            var startDate = DateFechaInicial.Value.Date;
+            var endDate = DateFechaFinal.Value.Date.AddDays(1).AddSeconds(-1); // Incluir todo el día final
+
+            if (startDate > endDate)
+            {
+                MessageBox.Show("La fecha inicial no puede ser mayor a la fecha final",
+                    "Error de fechas", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var sales = await _saleService.GetSalesByDateRangeAsync(startDate, endDate);
+            if (sales != null)
+            {
+                var salesList = sales.ToList();
+                gridHistorico.DataSource = null;
+                gridHistorico.DataSource = salesList;
+                ConfigureGrid();
+            }
         }
     }
 }

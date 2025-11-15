@@ -39,6 +39,7 @@ namespace IndigoApp.Forms.Forms
             if (products != null)
             {
                 gridProductos.DataSource = products;
+                ConfigureGrid();
             }
         }
 
@@ -141,7 +142,31 @@ namespace IndigoApp.Forms.Forms
 
         private void btnAtras_Click(object sender, EventArgs e)
         {
+            var MenuView = new MenuView(_authService);
+            MenuView.Show();
             this.Hide();
+        }
+
+        private void ConfigureGrid()
+        {
+            if (gridProductos.Columns.Count > 0)
+            {
+                // Ocultar columnas innecesarias
+                if (gridProductos.Columns.Contains("Id"))
+                    gridProductos.Columns["Id"].Visible = false;
+                if (gridProductos.Columns.Contains("SaleDetails"))
+                    gridProductos.Columns["SaleDetails"].Visible = false;
+                    gridProductos.Columns["SaleDetails"].ReadOnly = false;
+                if (gridProductos.Columns.Contains("Name"))
+                    gridProductos.Columns["Name"].HeaderText = "Nombre";
+                    gridProductos.Columns["Name"].Visible = true;
+                if (gridProductos.Columns.Contains("Price"))
+                    gridProductos.Columns["Price"].HeaderText = "Precio";
+                    gridProductos.Columns["Price"].Visible = true;
+                if (gridProductos.Columns.Contains("Stock"))
+                    gridProductos.Columns["Price"].HeaderText = "Disponible";
+                    gridProductos.Columns["Stock"].Visible = true;
+            }
         }
     }
 }

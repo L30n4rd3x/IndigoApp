@@ -1,38 +1,63 @@
 ﻿using IndigoApp.Domain.DTOs;
 using IndigoApp.Domain.Entities;
+using IndigoApp.Domain.Interfaces;
+using IndigoApp.Forms.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace IndigoApp.Forms.Services
+namespace IndigoApp.API.Controllers
 {
-    public class SaleService
+    [ApiController]
+    [Route("api/[controller]")]
+    [Authorize]
+    public class SalesController : ControllerBase
     {
-        private readonly ApiClient _apiClient;
+        private readonly ISaleRepository _saleRepository;
 
-        public SaleService(ApiClient apiClient)
+        public SalesController(ISaleRepository saleRepo)
         {
-            _apiClient = apiClient;
+            _saleRepository = saleRepo;
         }
 
-        public async Task<IEnumerable<Sale>?> GetAllSalesAsync()
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
         {
-            return await _apiClient.GetAsync<IEnumerable<Sale>>("sales");
+            var sales = await _saleRepository.GetAllSalesAsync();
+            return Ok(sales);
         }
 
-        public async Task<Sale?> GetSaleByIdAsync(int id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
         {
-            return await _apiClient.GetAsync<Sale>($"sales/{id}");
+            var sale = await _saleRepository.GetSaleByIdAsync(id);
+            if (sale == null)
+                return NotFound();
+
+            return Ok(sale);
         }
 
-        public async Task<IEnumerable<Sale>?> GetSalesByDateRangeAsync(DateTime startDate, DateTime endDate)
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] Sale sale)
         {
-            return await _apiClient.GetAsync<IEnumerable<Sale>>($"sales/bydate?startDate={startDate:yyyy-MM-dd}&endDate={endDate:yyyy-MM-dd}");
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            await _saleRepository.AddSaleAsync(sale);
+            return CreatedAtAction(nameof(GetById), new { id = sale.Id }, sale);
         }
 
-        public async Task<Sale?> CreateSaleAsync(CreateSaleRequest request)
+        [HttpGet("bydaterange")]
+        public async Task<IActionResult> GetByDateRange([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
         {
-            return await _apiClient.PostAsync<CreateSaleRequest, Sale>("sales", request);
+            if (startDate > endDate)
+                return BadRequest("La fecha inicial no puede ser mayor que la final.");
+
+            var sales = await _saleRepository.GetSalesByDateRangeAsync(startDate, endDate);
+
+            return Ok(sales);
         }
     }
 }

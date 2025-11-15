@@ -30,7 +30,7 @@ namespace IndigoApp.Forms.Forms
 
         private void btnReporte_Click(object sender, EventArgs e)
         {
-            var ReporteForm = new ReporteForm(_authService);
+            var ReporteForm = new ReportsView(_authService);
             ReporteForm.Show();
             this.Hide();
         }
