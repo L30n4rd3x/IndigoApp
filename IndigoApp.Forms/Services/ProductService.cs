@@ -17,28 +17,28 @@ namespace IndigoApp.Forms.Services
 
         public async Task<IEnumerable<Product>?> GetAllProductsAsync()
         {
-            return await _apiClient.GetAsync<IEnumerable<Product>>("prods");
+            return await _apiClient.GetAsync<IEnumerable<Product>>("products");
         }
 
         public async Task<Product?> GetProductByIdAsync(int id)
         {
-            return await _apiClient.GetAsync<Product>($"prods/{id}");
+            return await _apiClient.GetAsync<Product>($"products/{id}");
         }
 
         public async Task<bool> AddProductAsync(Product prod)
         {
-            var response = await _apiClient.PostAsync<Product, Product>("prods", prod);
+            var response = await _apiClient.PostAsync<Product, Product>("products", prod);
             return response != null;
         }
 
         public async Task<bool> UpdateProductAsync(Product prod)
         {
-            return await _apiClient.PutAsync<Product>($"prods/{prod.Id}", prod) != null;
+            return await _apiClient.PutAsync<Product>($"products/{prod.Id}", prod) != null;
         }
 
         public async Task<bool> DeleteProductAsync(int id)
         {
-            return await _apiClient.DeleteAsync($"prods/{id}") != null;
+            return await _apiClient.DeleteAsync($"products/{id}") != null;
         }
     }
 }

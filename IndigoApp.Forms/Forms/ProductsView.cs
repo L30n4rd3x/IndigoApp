@@ -23,6 +23,7 @@ namespace IndigoApp.Forms.Forms
         public ProductsView()
         {
             InitializeComponent();
+            _authService = new AuthService();
             _prodService = new ProductService(_authService.GetApiClient());
             LoadProducts();
         }
@@ -34,11 +35,6 @@ namespace IndigoApp.Forms.Forms
             {
                 gridProductos.DataSource = products;
             }
-        }
-
-        private void btnConsultar_Click(object sender, EventArgs e)
-        {
-
         }
 
         private async void btnCrear_Click(object sender, EventArgs e)

@@ -113,7 +113,6 @@
             btnConsultar.TabIndex = 9;
             btnConsultar.Text = "Consultar";
             btnConsultar.UseVisualStyleBackColor = true;
-            btnConsultar.Click += btnConsultar_Click;
             // 
             // btnCrear
             // 

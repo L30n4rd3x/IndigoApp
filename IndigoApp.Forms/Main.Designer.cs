@@ -30,13 +30,13 @@
         {
             SuspendLayout();
             // 
-            // SignIn
+            // Main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(563, 431);
-            Name = "SignIn";
-            Text = "Inicio de sesión";
+            Name = "Main";
+            Text = "main";
             ResumeLayout(false);
         }
 
