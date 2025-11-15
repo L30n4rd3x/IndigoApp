@@ -26,7 +26,7 @@ namespace IndigoApp.Infrastructure.Services
         public string GenerateJwtToken(User user)
         {
             var jwtSettings = _configuration.GetSection("JwtSettings");
-            var secretKey = jwtSettings["SecretKey"] ?? "MySecretKeyForJWTAuth2024SuperSecure!";
+            var secretKey = jwtSettings["SecretKey"] ?? "asdfghjkl987ky687t6dfjghdfgdfjhfytytd76677rc65654321";
             var issuer = jwtSettings["Issuer"] ?? "AppIndigoAPI";
             var audience = jwtSettings["Audience"] ?? "AppIndigoClient";
 

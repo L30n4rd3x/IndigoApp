@@ -2,6 +2,7 @@
 using IndigoApp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IndigoApp.Infrastructure.Migrations
 {
     [DbContext(typeof(IndigoAppDbContext))]
-    partial class IndigoAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251115060744_UpdatePasswordsWithHash")]
+    partial class UpdatePasswordsWithHash
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.1");
@@ -168,14 +171,14 @@ namespace IndigoApp.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Password = "/O9jHqsL4PadlA5zexNuDLz09vHegfUIIoYgAmVa+S4=",
+                            Password = "jJc+YkhBGwZb0jGZGQ7rYDt0JuAFRYFNKs4vH6KQVZU=",
                             RoleUser = "admin",
                             Username = "admin"
                         },
                         new
                         {
                             Id = 2,
-                            Password = "2x7bz7gP2WX+bYo6qypZc5JVZxoLRdwmPZm5rOgennk=",
+                            Password = "VyXfHBMVMdH1dJWFh0vXjBqE0bFRXZqvzqLx4gY2F3A=",
                             RoleUser = "user",
                             Username = "user"
                         });

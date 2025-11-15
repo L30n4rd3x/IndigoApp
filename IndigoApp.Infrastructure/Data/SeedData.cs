@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,6 +11,12 @@ namespace IndigoApp.Infrastructure.Data
 {
     public class SeedData
     {
+        private static string HashPassword(string password)
+        {
+            using var sha = SHA256.Create();
+            return Convert.ToBase64String(sha.ComputeHash(Encoding.UTF8.GetBytes(password)));
+        }
+
         public static void Seed(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().HasData(
@@ -18,8 +25,8 @@ namespace IndigoApp.Infrastructure.Data
             );
 
             modelBuilder.Entity<User>().HasData(
-                new User { Id = 1, Username = "admin", Password = "adm123", RoleUser = "admin" },
-                new User { Id = 2, Username = "user", Password = "user999", RoleUser = "user" }
+                new User { Id = 1, Username = "admin", Password = HashPassword("adm123"), RoleUser = "admin" },
+                new User { Id = 2, Username = "user", Password = HashPassword("user999"), RoleUser = "user" }
             );
 
             modelBuilder.Entity<Sale>().HasData(
