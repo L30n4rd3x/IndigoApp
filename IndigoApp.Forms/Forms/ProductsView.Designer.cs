@@ -35,13 +35,13 @@
             txtPrecio = new NumericUpDown();
             txtNombre = new TextBox();
             gridProductos = new DataGridView();
-            btnConsultar = new Button();
             btnCrear = new Button();
             btnModificar = new Button();
             btnEliminar = new Button();
             btnAddImagen = new Button();
             lblImagen = new Label();
             btnLimpiar = new Button();
+            btnAtras = new Button();
             ((System.ComponentModel.ISupportInitialize)txtStock).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtPrecio).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridProductos).BeginInit();
@@ -77,6 +77,7 @@
             // txtStock
             // 
             txtStock.Location = new Point(140, 188);
+            txtStock.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
             txtStock.Name = "txtStock";
             txtStock.Size = new Size(220, 23);
             txtStock.TabIndex = 4;
@@ -84,6 +85,7 @@
             // txtPrecio
             // 
             txtPrecio.Location = new Point(140, 125);
+            txtPrecio.Maximum = new decimal(new int[] { 100000000, 0, 0, 0 });
             txtPrecio.Name = "txtPrecio";
             txtPrecio.Size = new Size(220, 23);
             txtPrecio.TabIndex = 5;
@@ -105,18 +107,9 @@
             gridProductos.TabIndex = 8;
             gridProductos.SelectionChanged += gridProductos_SelectionChanged;
             // 
-            // btnConsultar
-            // 
-            btnConsultar.Location = new Point(576, 33);
-            btnConsultar.Name = "btnConsultar";
-            btnConsultar.Size = new Size(99, 23);
-            btnConsultar.TabIndex = 9;
-            btnConsultar.Text = "Consultar";
-            btnConsultar.UseVisualStyleBackColor = true;
-            // 
             // btnCrear
             // 
-            btnCrear.Location = new Point(576, 81);
+            btnCrear.Location = new Point(576, 56);
             btnCrear.Name = "btnCrear";
             btnCrear.Size = new Size(99, 23);
             btnCrear.TabIndex = 10;
@@ -126,7 +119,7 @@
             // 
             // btnModificar
             // 
-            btnModificar.Location = new Point(576, 131);
+            btnModificar.Location = new Point(576, 102);
             btnModificar.Name = "btnModificar";
             btnModificar.Size = new Size(99, 23);
             btnModificar.TabIndex = 11;
@@ -136,7 +129,7 @@
             // 
             // btnEliminar
             // 
-            btnEliminar.Location = new Point(576, 180);
+            btnEliminar.Location = new Point(576, 147);
             btnEliminar.Name = "btnEliminar";
             btnEliminar.Size = new Size(99, 23);
             btnEliminar.TabIndex = 12;
@@ -164,10 +157,11 @@
             lblImagen.TabIndex = 15;
             lblImagen.Text = "Sin imagen";
             lblImagen.TextAlign = ContentAlignment.MiddleCenter;
+            lblImagen.Visible = false;
             // 
             // btnLimpiar
             // 
-            btnLimpiar.Location = new Point(576, 225);
+            btnLimpiar.Location = new Point(576, 191);
             btnLimpiar.Name = "btnLimpiar";
             btnLimpiar.Size = new Size(99, 23);
             btnLimpiar.TabIndex = 16;
@@ -175,18 +169,28 @@
             btnLimpiar.UseVisualStyleBackColor = true;
             btnLimpiar.Click += btnLimpiar_Click;
             // 
+            // btnAtras
+            // 
+            btnAtras.Location = new Point(628, 12);
+            btnAtras.Name = "btnAtras";
+            btnAtras.Size = new Size(81, 23);
+            btnAtras.TabIndex = 17;
+            btnAtras.Text = "Atrás";
+            btnAtras.UseVisualStyleBackColor = true;
+            btnAtras.Click += btnAtras_Click;
+            // 
             // ProductsView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(721, 454);
+            Controls.Add(btnAtras);
             Controls.Add(btnLimpiar);
             Controls.Add(lblImagen);
             Controls.Add(btnAddImagen);
             Controls.Add(btnEliminar);
             Controls.Add(btnModificar);
             Controls.Add(btnCrear);
-            Controls.Add(btnConsultar);
             Controls.Add(gridProductos);
             Controls.Add(txtNombre);
             Controls.Add(txtPrecio);
@@ -194,7 +198,9 @@
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(label2);
+            MaximizeBox = false;
             Name = "ProductsView";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Productos";
             ((System.ComponentModel.ISupportInitialize)txtStock).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtPrecio).EndInit();
@@ -211,12 +217,12 @@
         private NumericUpDown txtPrecio;
         private TextBox txtNombre;
         private DataGridView gridProductos;
-        private Button btnConsultar;
         private Button btnCrear;
         private Button btnModificar;
         private Button btnEliminar;
         private Button btnAddImagen;
         private Label lblImagen;
         private Button btnLimpiar;
+        private Button btnAtras;
     }
 }

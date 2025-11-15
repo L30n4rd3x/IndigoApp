@@ -15,14 +15,14 @@ namespace IndigoApp.Forms.Services
             _apiClient = api;
         }
 
-        public async Task<IEnumerable<Product>?> GetAllProductsAsync()
+        public Task<IEnumerable<Product>?> GetAllProductsAsync()
         {
-            return await _apiClient.GetAsync<IEnumerable<Product>>("products");
+            return _apiClient.GetAsync<IEnumerable<Product>>("products");
         }
 
-        public async Task<Product?> GetProductByIdAsync(int id)
+        public Task<Product?> GetProductByIdAsync(int id)
         {
-            return await _apiClient.GetAsync<Product>($"products/{id}");
+            return _apiClient.GetAsync<Product>($"products/{id}");
         }
 
         public async Task<bool> AddProductAsync(Product prod)
@@ -33,7 +33,7 @@ namespace IndigoApp.Forms.Services
 
         public async Task<bool> UpdateProductAsync(Product prod)
         {
-            return await _apiClient.PutAsync<Product>($"products/{prod.Id}", prod) != null;
+            return await _apiClient.PutAsync<Product>($"products/{prod.Id}", prod);
         }
 
         public async Task<bool> DeleteProductAsync(int id)

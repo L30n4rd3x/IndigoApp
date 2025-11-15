@@ -23,7 +23,7 @@ namespace IndigoApp.API.Controllers
         {
             var (success, token, user) = await _authServ.LoginAsync(request.Username, request.Password);
 
-            if (!success || user == null || !VerifyPassword(request.Password, user.Password))
+            if (!success || user == null)
             {
                 return Unauthorized(new AuthResponse
                 {

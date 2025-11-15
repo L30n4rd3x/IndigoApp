@@ -13,7 +13,7 @@ namespace IndigoApp.Forms.Services
     {
         private readonly HttpClient _httpc;
         private static string? _authToken;
-        private const string Url = "https://localhost:7187/api";
+        private const string Url = "https://localhost:7187/api/";
 
         public ApiClient()
         {
@@ -60,17 +60,12 @@ namespace IndigoApp.Forms.Services
             return default;
         }
 
-        public async Task<HttpResponseMessage?> PutAsync<T>(string endpoint, T data)
+        public async Task<bool> PutAsync<T>(string endpoint, T data)
         {
             var jsonData = JsonConvert.SerializeObject(data);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
             var response = await _httpc.PutAsync(endpoint, content);
-            if (response.IsSuccessStatusCode)
-            {
-                var json = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<HttpResponseMessage>(json);
-            }
-            return default;
+            return response.IsSuccessStatusCode;
         }
 
         public async Task<bool> DeleteAsync(string endpoint)

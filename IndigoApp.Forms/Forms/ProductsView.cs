@@ -20,11 +20,16 @@ namespace IndigoApp.Forms.Forms
         private Product? _selectedProduct;
         private string? _selectedImagePath;
 
-        public ProductsView()
+        public ProductsView(AuthService authService)
         {
             InitializeComponent();
-            _authService = new AuthService();
+            _authService = authService;
             _prodService = new ProductService(_authService.GetApiClient());
+            this.Load += ProductsView_Load;
+        }
+
+        private void ProductsView_Load(object sender, EventArgs e)
+        {
             LoadProducts();
         }
 
@@ -75,9 +80,19 @@ namespace IndigoApp.Forms.Forms
             }
         }
 
-        private void btnEliminar_Click(object sender, EventArgs e)
+        private async void btnEliminar_Click(object sender, EventArgs e)
         {
+            if (_selectedProduct == null) return;
 
+            if (MessageBox.Show("¿Está seguro de eliminar este producto?", "Confirmar", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                if (await _prodService.DeleteProductAsync(_selectedProduct.Id))
+                {
+                    MessageBox.Show("Producto eliminado exitosamente");
+                    LoadProducts();
+                    ClearForm();
+                }
+            }
         }
 
         private void gridProductos_SelectionChanged(object sender, EventArgs e)
@@ -114,7 +129,7 @@ namespace IndigoApp.Forms.Forms
             ClearForm();
         }
 
-        private void ClearForm() 
+        private void ClearForm()
         {
             txtNombre.Clear();
             txtPrecio.Value = 0;
@@ -122,6 +137,11 @@ namespace IndigoApp.Forms.Forms
             lblImagen.Text = "Sin imagen";
             _selectedImagePath = null;
             _selectedProduct = null;
+        }
+
+        private void btnAtras_Click(object sender, EventArgs e)
+        {
+            this.Hide();
         }
     }
 }

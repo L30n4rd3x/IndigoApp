@@ -14,6 +14,7 @@ namespace IndigoApp.Domain.Entities
         public int UserId { get; set; }
         public User User { get; set; } = null!;
         public decimal Total { get; set; }
+        public DateTime SaleDate { get; set; }
         public ICollection<SaleDetail> SaleDetails { get; set; } = new List<SaleDetail>();
     }
 }

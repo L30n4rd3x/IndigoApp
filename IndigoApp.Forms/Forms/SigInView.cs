@@ -26,7 +26,7 @@ namespace IndigoApp.Forms.Forms
             frm.ShowDialog();
         }
 
-        private void btnSignIn_Click(object sender, EventArgs e)
+        private async void btnSignIn_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtUser.Text) || string.IsNullOrWhiteSpace(txtPass.Text))
             {
@@ -34,14 +34,14 @@ namespace IndigoApp.Forms.Forms
                 return;
             }
 
-            var response = _authService.LoginAsync(txtUser.Text, txtPass.Text);
+            var response = await _authService.LoginAsync(txtUser.Text, txtPass.Text);
 
-            if (response != null && response.IsCompleted)
+            if (response != null || !string.IsNullOrEmpty(response.Token))
             {
                 MessageBox.Show($"Bienvenido {txtUser.Text}!", "Login Exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                var ProductsForm = new ProductsView();
-                ProductsForm.Show();
+                var Menuform = new MenuView(_authService);
+                Menuform.Show();
                 this.Hide();
             }
             else
