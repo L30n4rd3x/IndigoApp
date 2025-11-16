@@ -26,7 +26,7 @@ namespace IndigoApp.Forms.Forms
             this.Load += SalesView_Load;
         }
 
-        private void SalesView_Load(object sender, EventArgs e)
+        private async void SalesView_Load(object sender, EventArgs e)
         {
             LoadProducts();
         }

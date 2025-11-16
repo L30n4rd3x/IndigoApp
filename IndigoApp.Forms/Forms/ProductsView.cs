@@ -28,12 +28,12 @@ namespace IndigoApp.Forms.Forms
             this.Load += ProductsView_Load;
         }
 
-        private void ProductsView_Load(object sender, EventArgs e)
+        private async void ProductsView_Load(object sender, EventArgs e)
         {
-            LoadProducts();
+            await LoadProducts();
         }
 
-        private async void LoadProducts()
+        private async Task LoadProducts()
         {
             var products = await _prodService.GetAllProductsAsync();
             if (products != null)
@@ -56,7 +56,7 @@ namespace IndigoApp.Forms.Forms
             if (await _prodService.AddProductAsync(prod))
             {
                 MessageBox.Show("Producto creado exitosamente");
-                LoadProducts();
+                await LoadProducts();
                 ClearForm();
             }
         }
@@ -76,7 +76,7 @@ namespace IndigoApp.Forms.Forms
             if (await _prodService.UpdateProductAsync(_selectedProduct))
             {
                 MessageBox.Show("Producto actualizado exitosamente");
-                LoadProducts();
+                await LoadProducts();
                 ClearForm();
             }
         }
@@ -90,7 +90,7 @@ namespace IndigoApp.Forms.Forms
                 if (await _prodService.DeleteProductAsync(_selectedProduct.Id))
                 {
                     MessageBox.Show("Producto eliminado exitosamente");
-                    LoadProducts();
+                    await LoadProducts();
                     ClearForm();
                 }
             }
@@ -112,7 +112,7 @@ namespace IndigoApp.Forms.Forms
             }
         }
 
-        private void btnAddImagen_Click(object sender, EventArgs e)
+        private async void btnAddImagen_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
@@ -164,7 +164,7 @@ namespace IndigoApp.Forms.Forms
                     gridProductos.Columns["Price"].HeaderText = "Precio";
                     gridProductos.Columns["Price"].Visible = true;
                 if (gridProductos.Columns.Contains("Stock"))
-                    gridProductos.Columns["Price"].HeaderText = "Disponible";
+                    gridProductos.Columns["Stock"].HeaderText = "Disponible";
                     gridProductos.Columns["Stock"].Visible = true;
             }
         }

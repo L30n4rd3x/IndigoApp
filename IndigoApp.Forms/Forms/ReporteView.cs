@@ -19,7 +19,7 @@ namespace IndigoApp.Forms.Forms
             this.Load += ReportsView_Load;
         }
 
-        private void ReportsView_Load(object sender, EventArgs e)
+        private async void ReportsView_Load(object sender, EventArgs e)
         {
             // Establecer fechas por defecto (último mes)
             DateFechaInicial.Value = DateTime.Now.AddMonths(-1);
@@ -52,7 +52,7 @@ namespace IndigoApp.Forms.Forms
             }
         }
 
-        private void btnMostrarTodas_Click(object sender, EventArgs e)
+        private async void btnMostrarTodas_Click(object sender, EventArgs e)
         {
             LoadAllSales();
         }

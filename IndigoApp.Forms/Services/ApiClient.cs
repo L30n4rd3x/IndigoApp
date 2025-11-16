@@ -37,6 +37,8 @@ namespace IndigoApp.Forms.Services
 
         public async Task<T?> GetAsync<T>(string endpoint)
         {
+            _httpc.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", _authToken);
             var response = await _httpc.GetAsync(endpoint);
             if (response.IsSuccessStatusCode)
             {
